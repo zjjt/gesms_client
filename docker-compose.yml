@@ -1,0 +1,5 @@
+app:
+  image: gesms_client
+  ports:
+    - "99:80"   
+  restart: always
