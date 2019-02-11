@@ -181,11 +181,14 @@ class EnvoiCustom extends Component {
        
        console.dir(this.props);
     }
+    componentDidUpdate(){
+        console.dir(this.state);
+    }
     render() {
         const {classes} = this.props;
         const {typesms,message,charno,columns,smsNo,envoi,loading,messageClient,expeditor}=this.state;
         const tooltipsms="Entrez votre sms ici. Si vous avez des valeurs dynamiques à y inserer, veuillez alors encapsuler le nom de la colonne de votre fichier Excel par des parenthèses.Example de sms dynamique: \"Bienvenue cher {CLIENT}\" ou CLIENT est le nom de la colonne à insérer";
-        return (
+        return (//
             <main className={classes.main}>
             {this.state.changeRoute}
             {loading?(<AlertDialog open={true} title={`Envoi des sms ${typesms}`} message={messageClient}/>):(<AlertDialog open={false} title={`Envoi des sms ${typesms}`} message=''/>)}
@@ -336,16 +339,18 @@ class EnvoiCustom extends Component {
                             id="#subBtn"
                             onClick={()=>{
                                 
-                                this.setState({
-                                    loading:true,
-                                    messageClient:'veuillez patienter opendant l\'envoi des sms',
-                                });
+                                
                                 if(this.state.envoi){
+                                    this.setState({
+                                        loading:true,
+                                        messageClient:'veuillez patienter opendant l\'envoi des sms',
+                                    });
                                     sendSmsMutation({
                                         variables:{
                                             data:envoi
                                         }
                                     }); 
+                                    this.forceUpdate();
                                 }else{
                                     this.submitter.click();
                                 }

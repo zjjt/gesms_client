@@ -1,22 +1,39 @@
 /* eslint-disable prettier/prettier */
 import React, {Component} from 'react';
-import { Dialog, DialogTitle } from '@material-ui/core';
+import { Dialog, DialogTitle, withStyles } from '@material-ui/core';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
-export default class AlertDialog extends Component{
+const styles= theme=>({
+    progress:{
+        margin:theme.spacing.unit*2,
+    },
+});
+
+ class AlertDialog extends Component{
     state={
         open:false
     }
+    componentDidMount(){
+        this.setState({
+            open:this.props.open
+        });
+    }
     render(){
-        const {title,message,open}=this.props;
+        const {title,message,open,classes}=this.props;
         return(
-            <Dialog open={this.state.open} onClose={()=>this.setState({open})}>
+            <Dialog open={open} onClose={()=>this.setState({open})}>
                 <DialogTitle>{title}</DialogTitle>
-                <div>
+                <div style={{flexDirection:"column",}}>
                     <center>
-                        <p>{message}</p>
+                        <CircularProgress className={classes.progress}/>
+                    </center>
+                    <center>
+                        <marquee>{message}</marquee>
                     </center>
                 </div>
             </Dialog>
         );
     }
 }
+
+export default withStyles(styles)(AlertDialog);

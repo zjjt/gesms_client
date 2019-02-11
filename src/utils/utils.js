@@ -55,7 +55,7 @@ export function checkFileValidity(f,allColumns){
 export function generateSmsTable(dataXl,state){
     //construit les sms a envoyer
     const {message,delimiters}=state;
-    let res=[];
+     let res=[];
     dataXl.data.forEach(e => {
         let sms=replaceAll(message,delimiters.first,"");
         sms=replaceAll(sms,delimiters.last,"");
