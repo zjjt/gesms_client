@@ -191,7 +191,7 @@ class EnvoiCustom extends Component {
         return (//
             <main className={classes.main}>
             {this.state.changeRoute}
-            {loading?(<AlertDialog open={true} title={`Envoi des sms ${typesms}`} message={messageClient}/>):(<AlertDialog open={false} title={`Envoi des sms ${typesms}`} message=''/>)}
+            {loading?(<AlertDialog open={true} title={`Envoi des sms ${typesms}`} message={messageClient} totalSms={envoi?envoi.messages.length:null} shouldClose={false}/>):(<AlertDialog open={false} title={`Envoi des sms ${typesms}`} message='' totalSms={envoi?envoi.messages.length:null} shouldClose={true}/>)}
                 <CssBaseline/>
                 <Paper className={classes.paper}>
                     <Avatar className={classes.avatar}>
@@ -316,15 +316,13 @@ class EnvoiCustom extends Component {
                         mutation={sendSmsMutation}
                         variables={{envoi}}
                         onCompleted={(data)=>{
-                           
                             if(data.sendSmsMutation){
-                                alert("Sms bien envoyés");
                                 this.setState({
                                     loading:false
                                 });
                                 this.reset();
                                 console.dir(data.sendSmsMutation);
-                                
+                                alert("Sms bien envoyés");
                             }
                             this.setState({
                                 envoi:null,
@@ -338,8 +336,6 @@ class EnvoiCustom extends Component {
                             color="primary"
                             id="#subBtn"
                             onClick={()=>{
-                                
-                                
                                 if(this.state.envoi){
                                     this.setState({
                                         loading:true,
