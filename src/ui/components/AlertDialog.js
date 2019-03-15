@@ -38,10 +38,15 @@ const styles= theme=>({
         if(props.shouldClose && this.state.open){
             setTimeout(()=>{
                 this.setState({
-                    open:false
+                    open:false,
                 })
             },1000)
         }
+    }
+    componentWillUnmount(){
+        this.setState({
+             nbEnvoyer:0
+        }); 
     }
     render(){
         const {title,message,open,classes}=this.props;
@@ -58,6 +63,7 @@ const styles= theme=>({
                             });
                         }
                     }
+                    fetchPolicy="cache-and-network"
                 >
                 {
                     ({data,loading})=>{

@@ -15,7 +15,7 @@ import {DropzoneArea} from 'material-ui-dropzone';
 import {Redirect} from 'react-router-dom';
 import classNames from 'classnames';
 import MenuItem from'@material-ui/core/MenuItem';
-import {Mutation} from "react-apollo";
+import {Mutation,Query} from "react-apollo";
 import gql from "graphql-tag";
 import AlertDialog from '../components/AlertDialog';
 
@@ -29,6 +29,16 @@ const sendSmsMutation=gql`
         status
         }
   }
+`;
+
+const getCurrentApi=gql`
+    {
+  getCurrentApi{
+    id
+    provider
+  }
+}
+
 `;
 
 class EnvoiCustom extends Component {
@@ -193,12 +203,17 @@ class EnvoiCustom extends Component {
             {this.state.changeRoute}
             {loading?(<AlertDialog open={true} title={`Envoi des sms ${typesms}`} message={messageClient} totalSms={envoi?envoi.messages.length:null} shouldClose={false}/>):(<AlertDialog open={false} title={`Envoi des sms ${typesms}`} message='' totalSms={envoi?envoi.messages.length:null} shouldClose={true}/>)}
                 <CssBaseline/>
+                <Query query={getCurrentApi}>
+                    {({ loading, error, data }) => {
+                    if (loading) return "Loading...";
+                    if (error) return `Error! ${error.message}`;
+                    return (
                 <Paper className={classes.paper}>
                     <Avatar className={classes.avatar}>
                         <Icon>speaker_notes</Icon>
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                    Envoyez vos sms
+                    Envoyez vos sms via {`${data.getCurrentApi.provider}`}
                     </Typography>
                     <ValidatorForm
                         ref={el=>this.form=el}
@@ -361,7 +376,9 @@ class EnvoiCustom extends Component {
                         </div>
                         
                     </ValidatorForm>
-                </Paper>
+                </Paper>);
+                    }}
+                </Query>
             </main>
         );
     }
