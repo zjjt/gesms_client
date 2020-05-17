@@ -2,8 +2,8 @@ app:
   image: gesms_client
   container_name: gesms_client
   environment: 
-    - REACT_APP_GRAPHQL_HTTP_ENDPOINT=http://192.168.99.100:97/graphql
-    - REACT_APP_GRAPHQL_WS_ENDPOINT=ws://192.168.99.100:97/subscriptions
+    - REACT_APP_GRAPHQL_HTTP_ENDPOINT=http://192.168.8.103:97/graphql
+    - REACT_APP_GRAPHQL_WS_ENDPOINT=ws://192.168.8.103:97/subscriptions
   ports:
     - "99:80"   
   restart: always

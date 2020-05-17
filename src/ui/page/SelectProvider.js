@@ -75,6 +75,7 @@ class SelectProvider extends Component {
                                     >
                                     <MenuItem value="ORANGE">ORANGE</MenuItem>
                                     <MenuItem value="MTN">MTN</MenuItem>
+                                    <MenuItem value="SYMTEL">SYMTEL</MenuItem>
                                     </SelectValidator>
                                 </Tooltip>
                             </FormControl> 
